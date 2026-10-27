@@ -17,18 +17,18 @@ const ANTLER = `<svg viewBox="0 0 32 32" fill="none" stroke="#c79a4b" stroke-wid
 
 /* ---------- sample data (clearly labeled) ---------- */
 const SAMPLES = [
- { id:"sample-elk", sample:true, v:2, badge:"Monster Bull", hunter:"Sample Hunter", species:"Rocky Mountain Elk", title:"“Big Thunder” 8×8 Monster Bull",
+ { id:"sample-elk", sample:true, v:3, aiCover:true, heroPos:"62% 40%", badge:"Monster Bull", hunter:"Sample Hunter", species:"Rocky Mountain Elk", title:"“Big Thunder” 8×8 Monster Bull",
    date:"2025-10-24", area:"Blue Mountains backcountry, Columbia County, WA (sample)", weapon:"Compound bow — 70 lb (sample)",
    party:"Sample Hunter, Dad, and Uncle Ray (sample names)", score:"431 ⅞ gross (sample)", distance:"34 yards",
-   photos:["photos/bigbull-1.jpg","photos/bigbull-2.jpg","photos/bigbull-3.jpg","photos/elk-4.jpg"],
+   photos:["photos/bigbull-hero.jpg","photos/bigbull-1.jpg","photos/bigbull-2.jpg","photos/bigbull-3.jpg"],
    story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nWe'd been chasing one bull for three seasons. Uncle Ray called him "Big Thunder" because you didn't hear his bugle so much as feel it in your chest. Trail cams showed a rack so wide it didn't look real.\n\nLast week of the late rut we hiked in by headlamp, eight miles up the ridge. At first light he screamed from the dark timber below us, close enough that Dad grabbed my arm. Ray cow-called once. The whole hillside went quiet.\n\nThen the brush started breaking. Eight points on each side, ivory tips glowing in the sunrise, steam pouring off his back. He stepped out at 34 yards and stopped broadside like he owned the mountain.\n\nI don't remember drawing. I remember the shaking, Dad hugging me, and Ray saying "boys, that's the bull of a lifetime." 431 ⅞ inches. Took us two days to pack him out, and every step was worth it.`
  },
- { id:"sample-blacktail", sample:true, hunter:"Sample Hunter", species:"Columbian Blacktail Deer", title:"4-Point Blacktail Buck",
-   date:"2025-10-18", area:"Skookumchuck River bottoms near Tenino, WA (sample)", weapon:"Compound bow (sample)",
-   party:"Sample Hunter (solo)", score:"118 ⅜ (sample)", distance:"27 yards",
-   photos:["photos/deer-1.jpg","photos/deer-2.jpg","photos/deer-3.jpg"],
-   story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nBlacktail are the ghosts of the Northwest. Three seasons I'd hunted this buck off one trail camera picture and never laid eyes on him.\n\nOn a drizzly October afternoon I slipped into a ground blind above the river crossing. Just before last light he came down the trail, stopped broadside at 27 yards, and looked right through me.\n\nI don't remember drawing the bow. I just remember the shaking afterward, and the quiet walk out under the alders.`
- }
+ { id:"sample-blacktail", sample:true, v:2, aiCover:true, heroPos:"60% 40%", badge:"Giant Buck", hunter:"Sample Hunter", species:"Columbian Blacktail Deer", title:"“Old Mossback” Giant 5×5 Blacktail",
+   date:"2025-10-18", area:"Doty Hills timber near Pe Ell, Lewis County, WA (sample)", weapon:"Rifle — .270 Win (sample)",
+   party:"Sample Hunter (solo)", score:"171 ⅜ gross (sample)", distance:"62 yards",
+   photos:["photos/bigbuck-hero.jpg","photos/deer-1.jpg","photos/deer-2.jpg","photos/deer-3.jpg"],
+   story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nBlacktail are the ghosts of the Northwest, and this one was the king ghost. Four years of trail cam pictures, always at 2 a.m., always that same heavy, chocolate-colored rack. We called him "Old Mossback" because he looked like he grew out of the timber.\n\nOpening weekend the rain came in sideways. I sat a mossy old-growth bench above a fern draw from dark until noon and never saw a hair. Then the wind switched, and a branch snapped below me.\n\nHe ghosted out of the ferns at 62 yards — five long points a side, beams as thick as my wrist, the biggest blacktail I've ever seen alive. One shot from the .270 and the woods went silent.\n\nI just sat down in the moss next to him and shook. 171 ⅜ inches. Bucks like that come once in a lifetime, and around here, they don't come at all.`
+ },
  ,
  { id:"sample-steelhead", sample:true, kind:"fish", hunter:"Sample Angler", species:"Winter Steelhead", title:"Skagit River Chrome Buck",
    date:"2026-01-17", area:"Skagit River near Rockport, WA (sample)", weight:"14 lb 6 oz", length:"34 in", lure:"Pink rubber worm under a float (sample)",
@@ -43,7 +43,7 @@ const CAM_SAMPLES = [
  { id:"cam-s3", sample:true, species:"Elk", sex:"Cow", points:"", camera:"Ridge Saddle Cam", location:"Saddle between the two clear-cuts (sample)", date:"2025-10-29", time:"07:05", photos:["photos/cam-2.jpg"], notes:"SAMPLE — Cow elk at first light. Bulls usually follow a day or two behind." },
  { id:"cam-s4", sample:true, species:"Black Bear", sex:"", points:"", camera:"Ridge Saddle Cam", location:"Saddle between the two clear-cuts (sample)", date:"2025-06-07", time:"05:50", photos:["photos/cam-3.jpg"], notes:"SAMPLE — Big boar, early morning. Hitting the saddle every few days in June." }
 ];
-const CREDITS = "Sample photos via Wikimedia Commons: Grand Teton NPS and Yellowstone National Park (public domain), Charles J. Sharp (CC BY-SA 4.0), Randalsson (CC BY-SA 4.0), Kirk Heims / USACE (public domain), U.S. Forest Service PNW (public domain), Philip Cohen (CC BY-SA 4.0), Joseph Dixon (public domain), Lianguanlun (CC BY 4.0), Ryan Hagerty / USFWS, Doug Wilson (NARA), BLM Oregon & Washington, U.S. Fish and Wildlife Service (all public domain). Sample photos are stand-ins, not the events described.";
+const CREDITS = "Sample cover photos of the hunter with the bull elk and the blacktail buck are AI-generated illustrations, not real people or animals. Other sample photos via Wikimedia Commons: Grand Teton NPS and Yellowstone National Park (public domain), Charles J. Sharp (CC BY-SA 4.0), Randalsson (CC BY-SA 4.0), Kirk Heims / USACE (public domain), U.S. Forest Service PNW (public domain), Philip Cohen (CC BY-SA 4.0), Joseph Dixon (public domain), Lianguanlun (CC BY 4.0), Ryan Hagerty / USFWS, Doug Wilson (NARA), BLM Oregon & Washington, U.S. Fish and Wildlife Service (all public domain). Sample photos are stand-ins, not the events described.";
 
 const CAMKEY = "th_cams_v1", SEEDKEY = "th_seeded_v1";
 function seeded(){ try{ return JSON.parse(localStorage.getItem(SEEDKEY)||"null"); }catch(e){ return null; } }
@@ -111,7 +111,7 @@ function renderList(){
    <div class="list">${list.length? list.map(t=>`
      <div class="tcard" onclick="location.hash='#/t/${esc(t.id)}'">
        ${t.sample?'<div class="sample-tag">Sample</div>':""}${t.badge?`<div class="badge-hot">🏆 ${esc(t.badge)}</div>`:""}
-       <div class="img" style="background-image:url('${esc(t.photos?.[0]||"")}')"></div>
+       <div class="img" style="background-image:url('${esc(t.photos?.[0]||"")}')${t.heroPos?";background-position:"+esc(t.heroPos):""}"></div>
        <div class="meta"><h3>${esc(t.title||t.species)}</h3><div class="sub">${esc(fmtDate(t.date))} · ${esc((t.area||"").replace(" (sample)",""))}</div></div>
        <div class="foot"><span class="chip">${esc(t.species)}</span>${fish?(t.weight?`<span class="chip gold">${esc(t.weight)}</span>`:""):(t.score?`<span class="chip gold">${esc(t.score.replace(" (sample)",""))}</span>`:"")}<span class="spacer" style="flex:1"></span>
          <button class="iconbtn" onclick="event.stopPropagation();location.hash='#/sticker/${esc(t.id)}'">▦ Sticker</button></div>
@@ -271,12 +271,12 @@ function renderTrophy(id, isPublic){
   const paras = (t.story||"").split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join("");
   const gal = (t.photos||[]).slice(1);
   root().innerHTML = (isPublic?"":topbar("location.hash='#/"+(fish?"fish":"hunt")+"'")) + `
-    <div class="tp-hero" style="background-image:url('${esc(t.photos?.[0]||"")}')">
+    <div class="tp-hero${t.heroPos?" tall":""}" style="background-image:url('${esc(t.photos?.[0]||"")}')${t.heroPos?";background-position:"+esc(t.heroPos):""}">
       <div class="sparks">${sparks(10)}</div>
       <div class="t"><div class="eyebrow">${esc(t.species)}</div><h1 class="shine">${esc(t.title||t.species)}</h1><div class="sub">${esc(fmtDate(t.date))}${t.hunter?(fish?" · Caught by ":" · Taken by ")+clean(t.hunter):""}</div>
         ${(fish?t.weight:t.score)?`<div class="medal">★ ${clean(fish?t.weight:t.score)} ★</div>`:""}</div>
     </div>
-    ${t.sample?`<div class="sample-banner"><b>SAMPLE PAGE</b> — names, story and details are made up to show the layout. Photos are free-license stand-ins, not this ${fish?"catch":"hunt"}.</div>`:""}
+    ${t.sample?`<div class="sample-banner"><b>SAMPLE PAGE</b> — names, story and details are made up to show the layout. ${t.aiCover?"The cover is an AI-generated illustration and the other photos are free-license stand-ins — not a real hunt.":`Photos are free-license stand-ins, not this ${fish?"catch":"hunt"}.`}</div>`:""}
     <div class="rule">The Record</div>
     <div class="stats">${stats.map(s=>`<div class="stat"><span>${s[0]}</span><span>${esc(s[1])}</span></div>`).join("")}</div>
     ${paras?`<div class="rule">The Story</div><div class="story">${paras}</div>`:""}

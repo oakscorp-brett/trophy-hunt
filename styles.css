@@ -245,3 +245,6 @@ fieldset.kindset[hidden]{display:none}
 .tcard::before{height:240px}
 .tcard .meta{top:auto;bottom:calc(100% - 226px)}
 .tcard .img{background-position:center 30%}
+.tp-hero.tall{height:80vh;max-height:720px;min-height:460px}
+.tp-hero.tall::after{background:linear-gradient(180deg,rgba(0,0,0,.2),transparent 25%,transparent 62%,rgba(20,14,9,.96) 97%)}
+@media (min-width:700px){.tp-hero.tall{height:auto;aspect-ratio:4/3;max-height:none}}

@@ -1,5 +1,21 @@
 [
  {
+  "file": "bigbull-hero.jpg",
+  "title": "Illustrative sample: hunter with giant bull elk",
+  "artist": "AI-generated (illustrative sample)",
+  "license": "AI-generated sample image, no third-party copyright",
+  "source": "Generated for Trophy Hunt sample data",
+  "note": "AI-generated illustrative sample image (Grok Bot GenerateImage, Oct 2026). Not a real hunt, hunter, or animal."
+ },
+ {
+  "file": "bigbuck-hero.jpg",
+  "title": "Illustrative sample: hunter with giant Columbia blacktail buck",
+  "artist": "AI-generated (illustrative sample)",
+  "license": "AI-generated sample image, no third-party copyright",
+  "source": "Generated for Trophy Hunt sample data",
+  "note": "AI-generated illustrative sample image (Grok Bot GenerateImage, Oct 2026). Not a real hunt, hunter, or animal."
+ },
+ {
   "file": "bigbull-3.jpg",
   "title": "File:Bull Elk Bugling (48877241522).jpg",
   "artist": "GrandTetonNPS",
