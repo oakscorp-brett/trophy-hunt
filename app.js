@@ -30,10 +30,10 @@ const SAMPLES = [
    story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nBlacktail are the ghosts of the Northwest, and this one was the king ghost. Four years of trail cam pictures, always at 2 a.m., always that same heavy, chocolate-colored rack. We called him "Old Mossback" because he looked like he grew out of the timber.\n\nOpening weekend the rain came in sideways. I sat a mossy old-growth bench above a fern draw from dark until noon and never saw a hair. Then the wind switched, and a branch snapped below me.\n\nHe ghosted out of the ferns at 62 yards — five long points a side, beams as thick as my wrist, the biggest blacktail I've ever seen alive. One shot from the .270 and the woods went silent.\n\nI just sat down in the moss next to him and shook. 171 ⅜ inches. Bucks like that come once in a lifetime, and around here, they don't come at all.`
  },
  ,
- { id:"sample-steelhead", sample:true, kind:"fish", hunter:"Sample Angler", species:"Winter Steelhead", title:"Skagit River Chrome Buck",
+ { id:"sample-steelhead", sample:true, v:2, aiCover:true, heroFit:"wide", kind:"fish", hunter:"Sample Angler", species:"Winter Steelhead", title:"Skagit River Chrome Buck",
    date:"2026-01-17", area:"Skagit River near Rockport, WA (sample)", weight:"14 lb 6 oz", length:"34 in", lure:"Pink rubber worm under a float (sample)",
    party:"Sample Angler and Grandpa (sample names)",
-   photos:["photos/fish-1.jpg","photos/fish-3.jpg","photos/fish-2.jpg","photos/fish-4.jpg"],
+   photos:["photos/steelhead-hero.jpg","photos/fish-1.jpg","photos/fish-3.jpg","photos/fish-2.jpg"],
    story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nWe put the drift boat in at first light with ice on the oarlocks. Grandpa said the river was "just right" — that green color he's been chasing for fifty winters.\n\nThird drift through the tailout the float went down hard. She ran straight downstream and jumped twice, bright as a new dime, and for ten minutes all I could hear was the reel and Grandpa laughing.\n\nWe got one quick photo and she swam back strong. I'll never forget that fish.`
  }
 ];
@@ -43,7 +43,7 @@ const CAM_SAMPLES = [
  { id:"cam-s3", sample:true, species:"Elk", sex:"Cow", points:"", camera:"Ridge Saddle Cam", location:"Saddle between the two clear-cuts (sample)", date:"2025-10-29", time:"07:05", photos:["photos/cam-2.jpg"], notes:"SAMPLE — Cow elk at first light. Bulls usually follow a day or two behind." },
  { id:"cam-s4", sample:true, species:"Black Bear", sex:"", points:"", camera:"Ridge Saddle Cam", location:"Saddle between the two clear-cuts (sample)", date:"2025-06-07", time:"05:50", photos:["photos/cam-3.jpg"], notes:"SAMPLE — Big boar, early morning. Hitting the saddle every few days in June." }
 ];
-const CREDITS = "Sample cover photos of the hunter with the bull elk and the blacktail buck are AI-generated illustrations, not real people or animals. Other sample photos via Wikimedia Commons: Grand Teton NPS and Yellowstone National Park (public domain), Charles J. Sharp (CC BY-SA 4.0), Randalsson (CC BY-SA 4.0), Kirk Heims / USACE (public domain), U.S. Forest Service PNW (public domain), Philip Cohen (CC BY-SA 4.0), Joseph Dixon (public domain), Lianguanlun (CC BY 4.0), Ryan Hagerty / USFWS, Doug Wilson (NARA), BLM Oregon & Washington, U.S. Fish and Wildlife Service (all public domain). Sample photos are stand-ins, not the events described.";
+const CREDITS = "Sample cover photos of the hunter with the bull elk, the hunter with the blacktail buck, and the angler with the steelhead are AI-generated illustrations, not real people or animals. Other sample photos via Wikimedia Commons: Grand Teton NPS and Yellowstone National Park (public domain), Charles J. Sharp (CC BY-SA 4.0), Randalsson (CC BY-SA 4.0), Kirk Heims / USACE (public domain), U.S. Forest Service PNW (public domain), Philip Cohen (CC BY-SA 4.0), Joseph Dixon (public domain), Lianguanlun (CC BY 4.0), Ryan Hagerty / USFWS, Doug Wilson (NARA), BLM Oregon & Washington, U.S. Fish and Wildlife Service (all public domain). Sample photos are stand-ins, not the events described.";
 
 const CAMKEY = "th_cams_v1", SEEDKEY = "th_seeded_v1";
 function seeded(){ try{ return JSON.parse(localStorage.getItem(SEEDKEY)||"null"); }catch(e){ return null; } }
@@ -271,12 +271,12 @@ function renderTrophy(id, isPublic){
   const paras = (t.story||"").split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p)}</p>`).join("");
   const gal = (t.photos||[]).slice(1);
   root().innerHTML = (isPublic?"":topbar("location.hash='#/"+(fish?"fish":"hunt")+"'")) + `
-    <div class="tp-hero${t.heroPos?" tall":""}" style="background-image:url('${esc(t.photos?.[0]||"")}')${t.heroPos?";background-position:"+esc(t.heroPos):""}">
+    <div class="tp-hero${t.heroFit==="wide"?" wide":(t.heroPos?" tall":"")}" style="background-image:url('${esc(t.photos?.[0]||"")}')${t.heroPos?";background-position:"+esc(t.heroPos):""}">
       <div class="sparks">${sparks(10)}</div>
       <div class="t"><div class="eyebrow">${esc(t.species)}</div><h1 class="shine">${esc(t.title||t.species)}</h1><div class="sub">${esc(fmtDate(t.date))}${t.hunter?(fish?" · Caught by ":" · Taken by ")+clean(t.hunter):""}</div>
         ${(fish?t.weight:t.score)?`<div class="medal">★ ${clean(fish?t.weight:t.score)} ★</div>`:""}</div>
     </div>
-    ${t.sample?`<div class="sample-banner"><b>SAMPLE PAGE</b> — names, story and details are made up to show the layout. ${t.aiCover?"The cover is an AI-generated illustration and the other photos are free-license stand-ins — not a real hunt.":`Photos are free-license stand-ins, not this ${fish?"catch":"hunt"}.`}</div>`:""}
+    ${t.sample?`<div class="sample-banner"><b>SAMPLE PAGE</b> — names, story and details are made up to show the layout. ${t.aiCover?`The cover is an AI-generated illustration and the other photos are free-license stand-ins — not a real ${fish?"catch":"hunt"}.`:`Photos are free-license stand-ins, not this ${fish?"catch":"hunt"}.`}</div>`:""}
     <div class="rule">The Record</div>
     <div class="stats">${stats.map(s=>`<div class="stat"><span>${s[0]}</span><span>${esc(s[1])}</span></div>`).join("")}</div>
     ${paras?`<div class="rule">The Story</div><div class="story">${paras}</div>`:""}
