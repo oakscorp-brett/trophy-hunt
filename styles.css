@@ -115,3 +115,25 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--brass);border-co
   #printArea img{width:2.5in;height:auto}
   #printArea.rect img{width:3.5in}
 }
+/* tabs, kinds, trail cam */
+fieldset.kindset{border:0;padding:0;margin:0;min-width:0;display:grid;gap:16px}
+fieldset.kindset[hidden]{display:none}
+.tabs{margin:14px 16px 0;width:auto}
+.tabs button{padding:10px 4px;font-size:14px}
+.groupbar{display:flex;align-items:center;gap:10px;margin:12px 16px 0;color:var(--muted);font-size:13px}
+.groupbar .seg{width:auto;flex:1}
+.seg.small button{padding:7px;font-size:13px}
+.camgroup{margin:16px 16px 0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.camhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.camhead h2{margin:0;font-size:19px;color:var(--bone)}
+.camhead .sub,.camspecies{color:var(--muted);font-size:13px;margin-top:3px}
+.camspecies{margin:6px 0 10px}
+.clist{display:grid;gap:10px;margin-top:6px}
+.ccard{display:flex;gap:12px;align-items:center;background:#120d08;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer}
+.ccard .cimg{position:relative;width:120px;min-width:120px;height:86px;background-size:cover;background-position:center}
+.ccard .cimg .sample-tag{top:4px;right:auto;left:4px;font-size:9px;padding:2px 5px}
+.ccard h3{margin:0 0 3px;font-size:17px;color:var(--bone)}
+.ccard .sub{color:var(--muted);font-size:12.5px;line-height:1.4}
+.story.notes{font-size:17px}
+.story.notes p:first-child::first-letter{float:none;font-size:inherit;padding:0;color:inherit}
+.tp-hero.cam{height:46vh;min-height:300px}
