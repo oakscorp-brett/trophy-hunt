@@ -11,16 +11,17 @@ const trophyUrl = id => CFG.BASE_URL.replace(/\/$/,"") + "/t.html?id=" + encodeU
 const FISH = `<svg viewBox="0 0 32 32" fill="none" stroke="#c79a4b" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 16c4-6.5 12-8.5 19-3.5l6-4.5v16l-6-4.5C15 24.5 7 22.5 3 16z"/><path d="M13 11.5c1.5 3 1.5 6 0 9"/><circle cx="8" cy="14.6" r="1.4" fill="#c79a4b" stroke="none"/></svg>`;
 const CAM = `<svg viewBox="0 0 32 32" fill="none" stroke="#c79a4b" stroke-width="1.8" stroke-linejoin="round"><rect x="7" y="5" width="18" height="23" rx="3"/><circle cx="16" cy="14" r="4.5"/><circle cx="16" cy="14" r="1.5" fill="#c79a4b" stroke="none"/><path d="M11 23h3M18 23h3"/><path d="M4 10v10M28 10v10" stroke-linecap="round"/></svg>`;
 const ICON_PATH = { hunt:"M16 27v-7M16 20c-3-1-5-4-5-8M11 12 8 6M11 12l-4 1M9.5 9 6 8M16 20c3-1 5-4 5-8M21 12l3-6M21 12l4 1M22.5 9 26 8", fish:"M3 16c4-6.5 12-8.5 19-3.5l6-4.5v16l-6-4.5C15 24.5 7 22.5 3 16z" };
+const sparks = n => Array.from({length:n},(_,i)=>`<i style="left:${(i*37+11)%100}%;top:${(i*53+7)%90}%;animation-delay:${((i*0.37)%2.6).toFixed(2)}s"></i>`).join("");
 const kindOf = t => t && t.kind==="fish" ? "fish" : "hunt";
 const ANTLER = `<svg viewBox="0 0 32 32" fill="none" stroke="#c79a4b" stroke-width="1.8" stroke-linecap="round"><path d="M16 27v-7M16 20c-3-1-5-4-5-8M11 12 8 6M11 12l-4 1M9.5 9 6 8M16 20c3-1 5-4 5-8M21 12l3-6M21 12l4 1M22.5 9 26 8"/><circle cx="16" cy="22" r="2.2" fill="#c79a4b" stroke="none"/></svg>`;
 
 /* ---------- sample data (clearly labeled) ---------- */
 const SAMPLES = [
- { id:"sample-elk", sample:true, hunter:"Sample Hunter", species:"Roosevelt Elk", title:"6×6 Roosevelt Bull",
-   date:"2025-11-08", area:"Capitol Forest foothills, Thurston County, WA (sample)", weapon:"Rifle — .300 Win Mag (sample)",
-   party:"Sample Hunter, Dad, and Uncle Ray (sample names)", score:"312 ⅝ gross (sample)", distance:"240 yards",
-   photos:["photos/elk-3.jpg","photos/elk-1.jpg","photos/elk-2.jpg","photos/elk-4.jpg"],
-   story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nWe left the truck at 4:30 in the morning with the fog still sitting low in the timber. Dad had seen fresh rubs on the old logging spur the week before, so we glassed the clear-cut at first light and waited.\n\nAround 7:15 a bull bugled from the draw below us — late in the season, which caught all of us off guard. Uncle Ray cow-called twice, and twenty minutes later six points on each side stepped out at the edge of the cut.\n\nOne shot at 240 yards. The pack-out took until dark and every one of us was soaked to the bone, but that's the hunt we'll be telling about for the rest of our lives.`
+ { id:"sample-elk", sample:true, v:2, badge:"Monster Bull", hunter:"Sample Hunter", species:"Rocky Mountain Elk", title:"“Big Thunder” 8×8 Monster Bull",
+   date:"2025-10-24", area:"Blue Mountains backcountry, Columbia County, WA (sample)", weapon:"Compound bow — 70 lb (sample)",
+   party:"Sample Hunter, Dad, and Uncle Ray (sample names)", score:"431 ⅞ gross (sample)", distance:"34 yards",
+   photos:["photos/bigbull-1.jpg","photos/bigbull-2.jpg","photos/bigbull-3.jpg","photos/elk-4.jpg"],
+   story:`SAMPLE STORY — this is placeholder text to show how a real story will look.\n\nWe'd been chasing one bull for three seasons. Uncle Ray called him "Big Thunder" because you didn't hear his bugle so much as feel it in your chest. Trail cams showed a rack so wide it didn't look real.\n\nLast week of the late rut we hiked in by headlamp, eight miles up the ridge. At first light he screamed from the dark timber below us, close enough that Dad grabbed my arm. Ray cow-called once. The whole hillside went quiet.\n\nThen the brush started breaking. Eight points on each side, ivory tips glowing in the sunrise, steam pouring off his back. He stepped out at 34 yards and stopped broadside like he owned the mountain.\n\nI don't remember drawing. I remember the shaking, Dad hugging me, and Ray saying "boys, that's the bull of a lifetime." 431 ⅞ inches. Took us two days to pack him out, and every step was worth it.`
  },
  { id:"sample-blacktail", sample:true, hunter:"Sample Hunter", species:"Columbian Blacktail Deer", title:"4-Point Blacktail Buck",
    date:"2025-10-18", area:"Skookumchuck River bottoms near Tenino, WA (sample)", weapon:"Compound bow (sample)",
@@ -42,7 +43,7 @@ const CAM_SAMPLES = [
  { id:"cam-s3", sample:true, species:"Elk", sex:"Cow", points:"", camera:"Ridge Saddle Cam", location:"Saddle between the two clear-cuts (sample)", date:"2025-10-29", time:"07:05", photos:["photos/cam-2.jpg"], notes:"SAMPLE — Cow elk at first light. Bulls usually follow a day or two behind." },
  { id:"cam-s4", sample:true, species:"Black Bear", sex:"", points:"", camera:"Ridge Saddle Cam", location:"Saddle between the two clear-cuts (sample)", date:"2025-06-07", time:"05:50", photos:["photos/cam-3.jpg"], notes:"SAMPLE — Big boar, early morning. Hitting the saddle every few days in June." }
 ];
-const CREDITS = "Sample photos via Wikimedia Commons: Charles J. Sharp (CC BY-SA 4.0), Randalsson (CC BY-SA 4.0), Kirk Heims / USACE (public domain), U.S. Forest Service PNW (public domain), Philip Cohen (CC BY-SA 4.0), Joseph Dixon (public domain), Lianguanlun (CC BY 4.0), Ryan Hagerty / USFWS, Doug Wilson (NARA), BLM Oregon & Washington, U.S. Fish and Wildlife Service (all public domain). Sample photos are stand-ins, not the events described.";
+const CREDITS = "Sample photos via Wikimedia Commons: Grand Teton NPS and Yellowstone National Park (public domain), Charles J. Sharp (CC BY-SA 4.0), Randalsson (CC BY-SA 4.0), Kirk Heims / USACE (public domain), U.S. Forest Service PNW (public domain), Philip Cohen (CC BY-SA 4.0), Joseph Dixon (public domain), Lianguanlun (CC BY 4.0), Ryan Hagerty / USFWS, Doug Wilson (NARA), BLM Oregon & Washington, U.S. Fish and Wildlife Service (all public domain). Sample photos are stand-ins, not the events described.";
 
 const CAMKEY = "th_cams_v1", SEEDKEY = "th_seeded_v1";
 function seeded(){ try{ return JSON.parse(localStorage.getItem(SEEDKEY)||"null"); }catch(e){ return null; } }
@@ -51,6 +52,7 @@ function seed(){ // add each sample once (even for people who used the first ver
   if(!s){ s = []; const old = localStorage.getItem(KEY); if(old!==null){ try{ JSON.parse(old).forEach(t=>t.sample&&s.push(t.id)); }catch(e){} s.push("sample-elk","sample-blacktail"); } }
   let tl=[]; try{ tl=JSON.parse(localStorage.getItem(KEY)||"[]"); }catch(e){}
   let cl=[]; try{ cl=JSON.parse(localStorage.getItem(CAMKEY)||"[]"); }catch(e){}
+  SAMPLES.forEach(x=>{ const i=tl.findIndex(t=>t.id===x.id&&t.sample); if(i>=0&&(tl[i].v||1)<(x.v||1)) tl[i]=x; }); // swap in updated sample (e.g. the bigger elk)
   SAMPLES.forEach(x=>{ if(!s.includes(x.id)){ if(!tl.some(t=>t.id===x.id)) tl.push(x); s.push(x.id); } });
   CAM_SAMPLES.forEach(x=>{ if(!s.includes(x.id)){ if(!cl.some(t=>t.id===x.id)) cl.push(x); s.push(x.id); } });
   try{ localStorage.setItem(KEY,JSON.stringify(tl)); localStorage.setItem(CAMKEY,JSON.stringify(cl)); localStorage.setItem(SEEDKEY,JSON.stringify(s)); }catch(e){}
@@ -100,18 +102,22 @@ function renderList(){
   const fish = tab==="fish";
   const list = load().filter(t=>kindOf(t)===tab).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
   root().innerHTML = topbar() + `
-   <div class="hero-intro"><h1>My Trophies</h1><p>${fish?"Every big fish has a story. Make a page for it, print a sticker, and let anyone scan it to see the catch.":"Every mount has a story. Make a page for it, print a sticker, and let anyone scan it to see the hunt."}</p></div>
+   <div class="vegas-hero ${fish?"fish":""}"><div class="sparks">${sparks(14)}</div>
+     <div class="vh-eyebrow">★ ${fish?"Hall of Fame Catches":"Hall of Fame Mounts"} ★</div>
+     <h1 class="shine">${fish?"Every Monster Fish Deserves a Legend.":"Every Mount Has a Legend."}</h1>
+     <p>${fish?"Snap it. Tell the story. Stick a QR by the mount — anyone who scans it relives the fight.":"Snap it. Tell the story. Stick a QR by the mount — anyone who scans it relives the hunt."}</p>
+     <div class="vh-steps"><span>📸 Snap</span><span>🎙 Tell it</span><span>▦ Scan &amp; brag</span></div></div>
    ${tabsBar(tab)}
    <div class="list">${list.length? list.map(t=>`
      <div class="tcard" onclick="location.hash='#/t/${esc(t.id)}'">
-       ${t.sample?'<div class="sample-tag">Sample</div>':""}
+       ${t.sample?'<div class="sample-tag">Sample</div>':""}${t.badge?`<div class="badge-hot">🏆 ${esc(t.badge)}</div>`:""}
        <div class="img" style="background-image:url('${esc(t.photos?.[0]||"")}')"></div>
        <div class="meta"><h3>${esc(t.title||t.species)}</h3><div class="sub">${esc(fmtDate(t.date))} · ${esc((t.area||"").replace(" (sample)",""))}</div></div>
-       <div class="foot"><span class="chip">${esc(t.species)}</span>${fish?(t.weight?`<span class="chip">${esc(t.weight)}</span>`:""):(t.score?`<span class="chip">${esc(t.score.replace(" (sample)",""))}</span>`:"")}<span class="spacer" style="flex:1"></span>
+       <div class="foot"><span class="chip">${esc(t.species)}</span>${fish?(t.weight?`<span class="chip gold">${esc(t.weight)}</span>`:""):(t.score?`<span class="chip gold">${esc(t.score.replace(" (sample)",""))}</span>`:"")}<span class="spacer" style="flex:1"></span>
          <button class="iconbtn" onclick="event.stopPropagation();location.hash='#/sticker/${esc(t.id)}'">▦ Sticker</button></div>
      </div>`).join("") : `<div class="empty">No ${fish?"fish":"hunting trophies"} yet. Tap “${fish?"Add a Fish":"Add a Trophy"}” to make your first page.</div>`}
    </div>
-   <div class="fab"><button class="btn block" onclick="location.hash='#/add/${tab}'">＋ ${fish?"Add a Fish":"Add a Trophy"}</button></div>`;
+   <div class="fab"><button class="btn block shimmer" onclick="location.hash='#/add/${tab}'">＋ ${fish?"Add a Fish":"Add a Trophy"}</button></div>`;
 }
 
 /* ---------- 2) add / edit ---------- */
@@ -266,7 +272,9 @@ function renderTrophy(id, isPublic){
   const gal = (t.photos||[]).slice(1);
   root().innerHTML = (isPublic?"":topbar("location.hash='#/"+(fish?"fish":"hunt")+"'")) + `
     <div class="tp-hero" style="background-image:url('${esc(t.photos?.[0]||"")}')">
-      <div class="t"><div class="eyebrow">${esc(t.species)}</div><h1>${esc(t.title||t.species)}</h1><div class="sub">${esc(fmtDate(t.date))}${t.hunter?(fish?" · Caught by ":" · Taken by ")+clean(t.hunter):""}</div></div>
+      <div class="sparks">${sparks(10)}</div>
+      <div class="t"><div class="eyebrow">${esc(t.species)}</div><h1 class="shine">${esc(t.title||t.species)}</h1><div class="sub">${esc(fmtDate(t.date))}${t.hunter?(fish?" · Caught by ":" · Taken by ")+clean(t.hunter):""}</div>
+        ${(fish?t.weight:t.score)?`<div class="medal">★ ${clean(fish?t.weight:t.score)} ★</div>`:""}</div>
     </div>
     ${t.sample?`<div class="sample-banner"><b>SAMPLE PAGE</b> — names, story and details are made up to show the layout. Photos are free-license stand-ins, not this ${fish?"catch":"hunt"}.</div>`:""}
     <div class="rule">The Record</div>
@@ -309,7 +317,7 @@ function renderCamList(){
    ${tabsBar("cams")}
    <div class="groupbar"><span>Group by</span><div class="seg small"><button data-g="camera" class="${by==="camera"?"on":""}">Camera</button><button data-g="date" class="${by==="date"?"on":""}">Newest</button></div></div>
    ${body}
-   <div class="fab"><button class="btn block" onclick="location.hash='#/addcam'">＋ Add Trail Cam Photo</button></div>`;
+   <div class="fab"><button class="btn block shimmer" onclick="location.hash='#/addcam'">＋ Add Trail Cam Photo</button></div>`;
   document.querySelectorAll(".groupbar button").forEach(b=>b.onclick=()=>{ try{ localStorage.setItem("th_cam_group",b.dataset.g); }catch(e){} renderCamList(); });
 }
 function renderCamForm(id){
